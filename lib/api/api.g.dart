@@ -21,13 +21,13 @@ class _PostsApiClient implements PostsApiClient {
   String? baseUrl;
 
   @override
-  Future<List<Users>> getUsersList(String word) async {
+  Future<List<UsersModel>> getUsersList() async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'word': word};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<List<dynamic>>(_setStreamType<List<Users>>(Options(
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<UsersModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -44,7 +44,65 @@ class _PostsApiClient implements PostsApiClient {
               baseUrl,
             ))));
     var value = _result.data!
-        .map((dynamic i) => Users.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => UsersModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  Future<List<PostsModel>> getPostListByUserId(int userId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'userId': userId};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<PostsModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/posts',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) => PostsModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  Future<List<CommentsModel>> getCommentsList() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<CommentsModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/comments',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) => CommentsModel.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
