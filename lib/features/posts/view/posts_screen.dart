@@ -1,3 +1,4 @@
+import 'package:application_with_posts_app/features/comments/view/comments_screen.dart';
 import 'package:application_with_posts_app/features/posts/cubit/posts_cubit.dart';
 import 'package:application_with_posts_app/ui/ui.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class _PostsScreenState extends State<PostsScreen> {
     return Scaffold(
       appBar: const CustomAppBar(),
       body: SafeArea(
+        bottom: false,
         child: CustomScrollView(
           slivers: [
             BlocBuilder<PostsCubit, PostsState>(
@@ -24,11 +26,20 @@ class _PostsScreenState extends State<PostsScreen> {
                   return SliverList.builder(
                     itemCount: state.postsList.length,
                     itemBuilder: (context, i) {
-                      return SizedBox(
-                        height: 100,
-                        child: Text(
-                          state.postsList[i].title,
-                          style: const TextStyle(color: Colors.black),
+                      final post = state.postsList[i];
+
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CommentsScreen(
+                              postId: post.id,
+                            ),
+                          ),
+                        ),
+                        child: ListCard(
+                          title: post.title,
+                          body: post.body,
                         ),
                       );
                     },

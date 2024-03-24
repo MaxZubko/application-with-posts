@@ -14,7 +14,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         builder: (context, state) {
           if (state is UsersLoaded) {
             final userName = state.usersList[state.userId - 1];
-            return Text(userName.name);
+            return Text(
+              userName.name,
+            );
           }
           return const Text('');
         },
