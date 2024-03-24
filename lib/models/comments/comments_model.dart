@@ -5,13 +5,13 @@ part 'comments_model.g.dart';
 @JsonSerializable()
 class CommentsModel {
   final int postId;
-  final int commentId;
+  final int id;
   final String email;
   final String body;
 
   CommentsModel({
     required this.postId,
-    required this.commentId,
+    required this.id,
     required this.email,
     required this.body,
   });

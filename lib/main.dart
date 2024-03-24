@@ -1,6 +1,7 @@
 import 'package:application_with_posts_app/api/api.dart';
 import 'package:application_with_posts_app/cubit/users_cubit.dart';
 import 'package:application_with_posts_app/features/posts/cubit/posts_cubit.dart';
+import 'package:application_with_posts_app/ui/theme/theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,9 +39,10 @@ class PostsApp extends StatelessWidget {
           ),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: darkTheme,
         debugShowCheckedModeBanner: false,
-        home: PostsScreen(),
+        home: const PostsScreen(),
       ),
     );
   }
