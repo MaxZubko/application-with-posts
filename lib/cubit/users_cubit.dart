@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:application_with_posts_app/api/api.dart';
 import 'package:application_with_posts_app/models/models.dart';
 import 'package:bloc/bloc.dart';
@@ -15,13 +17,18 @@ class UsersCubit extends Cubit<UsersState> {
 
   final PostsApiClient _apiClient;
 
-  Future<void> getUsers({int userId = 1}) async {
+  Future<void> getUsers({
+    int userId = 1,
+    Completer? completer,
+  }) async {
     try {
       emit(UsersLoading());
       final users = await _apiClient.getUsersList();
       emit(UsersLoaded(usersList: users, userId: userId));
     } catch (error) {
       emit(UsersFailure(error: error));
+    } finally {
+      completer?.complete();
     }
   }
 }

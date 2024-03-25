@@ -1,5 +1,6 @@
 import 'package:application_with_posts_app/features/comments/view/comments_screen.dart';
 import 'package:application_with_posts_app/features/posts/cubit/posts_cubit.dart';
+import 'package:application_with_posts_app/features/users/users.dart';
 import 'package:application_with_posts_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,15 @@ class _PostsScreenState extends State<PostsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: CustomAppBar(
+        isHomeScreen: true,
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const UsersScreen(),
+          ),
+        ),
+      ),
       body: SafeArea(
         bottom: false,
         child: CustomScrollView(
@@ -44,6 +53,10 @@ class _PostsScreenState extends State<PostsScreen> {
                       );
                     },
                   );
+                }
+
+                if (state is PostsFailure) {
+                  return const Text('Something went wrong');
                 }
 
                 return const SliverFillRemaining(

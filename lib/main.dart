@@ -16,7 +16,11 @@ void main() {
 
   getIt.registerSingleton<Dio>(Dio());
 
-  getIt.registerSingleton<PostsApiClient>(PostsApiClient(getIt<Dio>()));
+  getIt.registerSingleton<PostsApiClient>(
+    PostsApiClient(
+      getIt<Dio>(),
+    ),
+  );
 
   runApp(const PostsApp());
 }
@@ -29,12 +33,12 @@ class PostsApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => PostsCubit(
+          create: (context) => UsersCubit(
             apiClient: GetIt.I<PostsApiClient>(),
           ),
         ),
         BlocProvider(
-          create: (context) => UsersCubit(
+          create: (context) => PostsCubit(
             apiClient: GetIt.I<PostsApiClient>(),
           ),
         ),

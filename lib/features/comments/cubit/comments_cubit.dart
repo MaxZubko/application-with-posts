@@ -20,8 +20,11 @@ class CommentsCubit extends Cubit<CommentsState> {
     try {
       emit(CommentsLoading());
       final comments = await _apiClient.getCommentsList();
+
+      /// Find messages under the corresponding post
       final List<CommentsModel> commentsByPostId =
           comments.where((element) => element.postId == postId).toList();
+
       emit(CommentsLoaded(commentsList: commentsByPostId));
     } catch (e) {
       emit(CommentsFailure(error: e));

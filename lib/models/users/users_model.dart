@@ -6,8 +6,10 @@ part 'users_model.g.dart';
 class UsersModel {
   final int id;
   final String name;
+  final String username;
 
-  UsersModel({
+  UsersModel(
+    this.username, {
     required this.id,
     required this.name,
   });

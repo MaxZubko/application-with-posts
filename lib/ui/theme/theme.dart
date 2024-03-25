@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-// #1D1D1D
-// #0E0E0E
-
 const _appBarColor = Color(0xFF0E0E0E);
 const _scaffoldBackgroundColor = Color(0xFF1D1D1D);
 
