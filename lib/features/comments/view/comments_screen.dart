@@ -16,16 +16,21 @@ class CommentsScreen extends StatelessWidget {
         apiClient: GetIt.I<PostsApiClient>(),
         postId: postId,
       ),
-      child: Scaffold(
-        appBar: const CustomAppBar(),
-        body: SafeArea(
-          bottom: false,
-          child: CustomScrollView(
-            slivers: [
-              BlocBuilder<CommentsCubit, CommentsState>(
-                builder: (context, state) {
-                  if (state is CommentsLoaded) {
-                    return SliverList.builder(
+      child: BlocBuilder<CommentsCubit, CommentsState>(
+        builder: (context, state) {
+          final isLoaded = state is CommentsLoaded;
+          return Scaffold(
+            appBar: CustomAppBar(
+              title: isLoaded
+                  ? 'Comments (${state.commentsList.length})'
+                  : 'Comments',
+            ),
+            body: SafeArea(
+              bottom: false,
+              child: CustomScrollView(
+                slivers: [
+                  if (isLoaded) ...[
+                    SliverList.builder(
                       itemCount: state.commentsList.length,
                       itemBuilder: (context, i) {
                         final comment = state.commentsList[i];
@@ -35,19 +40,23 @@ class CommentsScreen extends StatelessWidget {
                           body: comment.body,
                         );
                       },
-                    );
-                  }
-
-                  return const SliverFillRemaining(
-                    child: Center(
-                      child: CircularProgressIndicator(),
                     ),
-                  );
-                },
-              )
-            ],
-          ),
-        ),
+                  ] else if (state is CommentsFailure) ...[
+                    const SliverToBoxAdapter(
+                      child: Text('Something went wrong'),
+                    ),
+                  ] else ...[
+                    const SliverFillRemaining(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
