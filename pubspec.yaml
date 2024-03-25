@@ -47,6 +47,9 @@ dependencies:
   # JSON
   json_annotation: ^4.8.1
 
+  # DATABASE
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
