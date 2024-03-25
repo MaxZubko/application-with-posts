@@ -41,7 +41,6 @@ class _UsersScreenState extends State<UsersScreen> {
                   final title = '$name ($userName)';
                   return GestureDetector(
                     onTap: () async {
-                      // Navigator.pop(context);
                       await _changeCurrentUser(
                         context,
                         usersCubit,
